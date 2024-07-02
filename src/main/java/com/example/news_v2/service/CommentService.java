@@ -1,9 +1,9 @@
 package com.example.news_v2.service;
 
 import com.example.news_v2.aop.Author;
-import com.example.news_v2.model.Comment;
-import com.example.news_v2.model.News;
-import com.example.news_v2.model.User;
+import com.example.news_v2.entity.Comment;
+import com.example.news_v2.entity.News;
+import com.example.news_v2.entity.User;
 import com.example.news_v2.repository.CommentRepository;
 import com.example.news_v2.utils.BeanUtils;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,11 +33,11 @@ public class CommentService {
         User user = userService.findById(comments.getUser().getId());
 
         comments.setNews(news);
+        comments.setUser(user);
 
         return commentRepository.save(comments);
     }
 
-    @Author
     public Comment update(Comment comment) {
         News news = newsService.findById(comment.getNews().getId());
         User user = userService.findById(comment.getUser().getId());
@@ -51,7 +51,6 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    @Author
     public void deleteById(Long id) {
         commentRepository.deleteById(id);
     }

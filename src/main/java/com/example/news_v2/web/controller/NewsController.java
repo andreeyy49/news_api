@@ -1,9 +1,12 @@
 package com.example.news_v2.web.controller;
 
 import com.example.news_v2.aop.Author;
+import com.example.news_v2.aop.ThisUser;
+import com.example.news_v2.entity.User;
 import com.example.news_v2.mapper.NewsMapper;
-import com.example.news_v2.model.News;
+import com.example.news_v2.entity.News;
 import com.example.news_v2.service.NewsService;
+import com.example.news_v2.service.UserService;
 import com.example.news_v2.web.model.filter.NewsFilter;
 import com.example.news_v2.web.model.news.NewsListResponse;
 import com.example.news_v2.web.model.news.NewsWithCommentsResponse;
@@ -13,6 +16,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class NewsController {
 
     private final NewsService newsService;
+    private final UserService userService;
     private final NewsMapper newsMapper;
 
     @GetMapping("/filter")
@@ -51,8 +57,12 @@ public class NewsController {
     }
 
     @PostMapping
-    public ResponseEntity<NewsWithoutCommentsResponse> create(@RequestBody @Valid UpsertNewsRequest request) {
-        News newNews = newsService.save(newsMapper.requestToNews(request));
+    public ResponseEntity<NewsWithoutCommentsResponse> create(@RequestBody @Valid UpsertNewsRequest request,
+                                                              @AuthenticationPrincipal UserDetails userDetails) {
+        News newNews = newsMapper.requestToNews(request);
+        User user =  userService.findByUsername(userDetails.getUsername());
+        newNews.setUser(user);
+        newNews = newsService.save(newNews);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 newsMapper.newsToResponse(
@@ -62,18 +72,22 @@ public class NewsController {
     }
 
     @Author
-    @PutMapping("/{id}&{userId}")
+    @PutMapping("/{id}")
     public ResponseEntity<NewsWithoutCommentsResponse> update(@PathVariable("id") Long newsId,
-                                                              @RequestBody @Valid UpsertNewsRequest request){
-        News updatedNews = newsService.update(newsMapper.requestToNews(newsId, request));
+                                                              @RequestBody @Valid UpsertNewsRequest request,
+                                                              @AuthenticationPrincipal UserDetails userDetails){
+        News updatedNews = newsMapper.requestToNews(newsId, request);
+        User user =  userService.findByUsername(userDetails.getUsername());
+        updatedNews.setUser(user);
+        updatedNews = newsService.update(updatedNews);
 
         return ResponseEntity.ok(
                 newsMapper.newsToResponse(updatedNews)
         );
     }
 
-    @Author
-    @DeleteMapping("/{id}&{userId}")
+    @ThisUser
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         newsService.deleteById(id);
 

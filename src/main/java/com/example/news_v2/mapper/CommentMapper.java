@@ -1,6 +1,6 @@
 package com.example.news_v2.mapper;
 
-import com.example.news_v2.model.Comment;
+import com.example.news_v2.entity.Comment;
 import com.example.news_v2.web.model.comment.CommentListResponse;
 import com.example.news_v2.web.model.comment.CommentResponse;
 import com.example.news_v2.web.model.comment.UpsertCommentRequest;

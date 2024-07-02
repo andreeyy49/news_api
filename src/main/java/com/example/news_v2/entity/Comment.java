@@ -1,4 +1,4 @@
-package com.example.news_v2.model;
+package com.example.news_v2.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

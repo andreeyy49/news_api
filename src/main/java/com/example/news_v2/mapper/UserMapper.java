@@ -1,6 +1,6 @@
 package com.example.news_v2.mapper;
 
-import com.example.news_v2.model.User;
+import com.example.news_v2.entity.User;
 import com.example.news_v2.web.model.user.UpsertUserRequest;
 import com.example.news_v2.web.model.user.UserListResponse;
 import com.example.news_v2.web.model.user.UserResponse;
@@ -18,7 +18,6 @@ public interface UserMapper {
 
     @Mapping(source = "userId", target = "id")
     User requestToUser(Long userId, UpsertUserRequest request);
-
     UserResponse userToResponse(User user);
 
     List<UserResponse> userListToResponseList(List<User> users);

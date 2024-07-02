@@ -1,6 +1,6 @@
 package com.example.news_v2.mapper;
 
-import com.example.news_v2.model.News;
+import com.example.news_v2.entity.News;
 import com.example.news_v2.web.model.news.NewsListResponse;
 import com.example.news_v2.web.model.news.NewsWithCommentsResponse;
 import com.example.news_v2.web.model.news.NewsWithoutCommentsResponse;

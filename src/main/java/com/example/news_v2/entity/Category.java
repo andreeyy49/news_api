@@ -1,4 +1,4 @@
-package com.example.news_v2.model;
+package com.example.news_v2.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,7 +6,6 @@ import lombok.experimental.FieldNameConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor

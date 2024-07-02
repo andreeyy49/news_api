@@ -1,6 +1,6 @@
 package com.example.news_v2.mapper;
 
-import com.example.news_v2.model.News;
+import com.example.news_v2.entity.News;
 import com.example.news_v2.service.CategoryService;
 import com.example.news_v2.service.UserService;
 import com.example.news_v2.web.model.news.NewsWithoutCommentsResponse;
@@ -24,8 +24,6 @@ public abstract class NewsMapperDelegate implements NewsMapper {
         news.setTitle(request.getTitle());
         news.setBody(request.getBody());
         news.setCategory(categoryService.findById(request.getCategoryId()));
-        news.setUser(userService.findById(request.getUserId()));
-
         return news;
     }
 

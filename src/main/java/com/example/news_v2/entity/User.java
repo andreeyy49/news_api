@@ -1,4 +1,4 @@
-package com.example.news_v2.model;
+package com.example.news_v2.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +20,7 @@ public class User {
     private Long id;
 
     @Column(name = "user_name")
-    private String name;
+    private String username;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
@@ -31,4 +31,12 @@ public class User {
     @ToString.Exclude
     @Builder.Default
     private List<News> news = new ArrayList<>();
+
+    private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @Builder.Default
+    private List<Role> roles = new ArrayList<>();
 }

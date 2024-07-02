@@ -1,7 +1,7 @@
 package com.example.news_v2.web.controller;
 
 import com.example.news_v2.mapper.CategoryMapper;
-import com.example.news_v2.model.Category;
+import com.example.news_v2.entity.Category;
 import com.example.news_v2.service.CategoryService;
 import com.example.news_v2.web.model.category.CategoryListResponse;
 import com.example.news_v2.web.model.category.CategoryResponse;
@@ -11,9 +11,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/category")
@@ -42,6 +41,7 @@ public class CategoryController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<CategoryResponse> create(@RequestBody @Valid UpsertCategoryRequest request){
         Category newCategory = categoryService.save(categoryMapper.requestToCategory(request));
 
@@ -50,6 +50,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<CategoryResponse> update(@PathVariable("id") Long categoryId,
                                                    @RequestBody @Valid UpsertCategoryRequest request){
         Category updatedCategory = categoryService.update(categoryMapper.requestToCategory(categoryId, request));
@@ -60,6 +61,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MODERATOR')")
     public ResponseEntity<Void> delete(@PathVariable("id") Long categoryId){
         categoryService.deleteById(categoryId);
 

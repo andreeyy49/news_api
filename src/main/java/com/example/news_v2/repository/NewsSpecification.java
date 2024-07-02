@@ -1,8 +1,8 @@
 package com.example.news_v2.repository;
 
-import com.example.news_v2.model.Category;
-import com.example.news_v2.model.News;
-import com.example.news_v2.model.User;
+import com.example.news_v2.entity.Category;
+import com.example.news_v2.entity.News;
+import com.example.news_v2.entity.User;
 import com.example.news_v2.web.model.filter.NewsFilter;
 import org.springframework.data.jpa.domain.Specification;
 

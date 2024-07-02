@@ -1,10 +1,9 @@
 package com.example.news_v2.mapper;
 
-import com.example.news_v2.model.Category;
+import com.example.news_v2.entity.Category;
 import com.example.news_v2.web.model.category.CategoryListResponse;
 import com.example.news_v2.web.model.category.CategoryResponse;
 import com.example.news_v2.web.model.category.UpsertCategoryRequest;
-import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;

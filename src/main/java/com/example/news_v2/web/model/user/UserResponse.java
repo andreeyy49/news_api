@@ -13,7 +13,7 @@ public class UserResponse {
 
     private Long id;
 
-    private String name;
+    private String username;
 
     private List<NewsWithoutCommentsResponse> news = new ArrayList<>();
 

@@ -1,16 +1,14 @@
 package com.example.news_v2.service;
 
-import com.example.news_v2.model.Category;
+import com.example.news_v2.entity.Category;
 import com.example.news_v2.repository.CategoryRepository;
 import com.example.news_v2.utils.BeanUtils;
 import com.example.news_v2.web.model.filter.ObjectFilter;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.naming.ldap.PagedResultsControl;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class CategoryService {
 
     public Category findById(Long id) {
         return categoriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format(
-                "Категория с ID: {} не найдена", id
+                "Категория с ID: {0} не найдена", id
         )));
     }
 
